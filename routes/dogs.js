@@ -15,14 +15,14 @@ router.get("/", async (req, res, next) => {
 
 // new form route
 router.get("/new", (req, res) => {
-  res.send("new dog form");
+  res.json("new dog form");
 });
 
 // create route
 router.post("/", async (req, res, next) => {
   try {
     const dog = await Dog.create(req.body);
-    res.send(dog);
+    res.json(dog);
   } catch (error) {
     console.log(error);
     next(error);
@@ -33,7 +33,7 @@ router.post("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const dog = await Dog.findById(req.params.id);
-    res.send(dog);
+    res.json(dog);
   } catch (error) {
     console.log(error);
     next(error);
@@ -42,7 +42,7 @@ router.get("/:id", async (req, res, next) => {
 
 // edit form route
 router.get("/:id/edit", (req, res) => {
-  res.send("edit dog form");
+  res.json("edit dog form");
 });
 
 // update form route
