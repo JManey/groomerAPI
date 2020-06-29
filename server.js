@@ -1,4 +1,6 @@
 const express = require('express');
+const indexRoute = require("./routes/index")
+const dogsRoute = require("./routes/dogs")
 
 
 require('dotenv').config()
@@ -14,10 +16,8 @@ app.use(express.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(express.json())
 
-// define a simple route
-app.get('/', (req, res) => {
-    res.json({"message": "Welcome to our dog groomer  home route"});
-});
+app.use('/', indexRoute);
+app.use('/dogs', dogsRoute);
 
 // listen for requests
 app.listen(process.env.PORT, () => {
