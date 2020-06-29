@@ -15,25 +15,9 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// create route ====  sign up new user  =====
-router.post("/register", async (req, res, next) => {
-  console.log("req.body", req.body);
-  let newUser = new User({
-    username: req.body.username,
-    name: req.body.name,
-    notes: req.body.notes,
-  });
-  User.register(newUser, req.body.password, function (err, user) {
-    console.log("newUser", newUser);
-    if (err) {
-        console.log(err)
-      return res.json({ error: "did not register user" });
-    }
-    passport.authenticate("local")(req, res, () => {
-      res.json(user);
-    });
-  });
-});
+
+
+
 
 // show route
 router.get("/:id", async (req, res, next) => {
@@ -49,7 +33,7 @@ router.get("/:id", async (req, res, next) => {
 // update form route
 router.put("/:id", async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(req.params.id, req.body);
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
     res.redirect(`/users/${req.params.id}`);
   } catch (error) {
     console.log(error);
