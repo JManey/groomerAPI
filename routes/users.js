@@ -15,15 +15,13 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-
-
-
-
 // show route
 router.get("/:id", async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id);
-    res.json(user);
+    const user = await User.findById(req.params.id)
+      .populate("dogs")
+      .exec()
+      .then((user) => res.json(user));
   } catch (error) {
     console.log(error);
     next(error);
