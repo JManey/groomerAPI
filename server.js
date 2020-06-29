@@ -1,8 +1,10 @@
 const express = require("express");
 const indexRoute = require("./routes/index");
 const dogsRoute = require("./routes/dogs");
+const usersRoute = require("./routes/users");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
 require("dotenv").config();
 // connect to the MongoDB with mongoose
@@ -42,6 +44,7 @@ app.use(function (req, res, next) {
 
 app.use("/", indexRoute);
 app.use("/dogs", dogsRoute);
+app.use("/users", usersRoute);
 
 // listen for requests
 app.listen(process.env.PORT, () => {

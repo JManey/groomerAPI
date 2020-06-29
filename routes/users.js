@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const User = require("../models/user");
 
+//all users
+// ===== needs to be protected ====
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.find({});
@@ -12,15 +15,24 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// create route
-router.post("/", async (req, res, next) => {
-  try {
-    const user = await User.create(req.body);
-    res.redirect("/");
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
+// create route ====  sign up new user  =====
+router.post("/register", async (req, res, next) => {
+  console.log("req.body", req.body);
+  let newUser = new User({
+    username: req.body.username,
+    name: req.body.name,
+    notes: req.body.notes,
+  });
+  User.register(newUser, req.body.password, function (err, user) {
+    console.log("newUser", newUser);
+    if (err) {
+        console.log(err)
+      return res.json({ error: "did not register user" });
+    }
+    passport.authenticate("local")(req, res, () => {
+      res.json(user);
+    });
+  });
 });
 
 // show route
