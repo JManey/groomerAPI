@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Dog = require("../models/dog");
-const User = require("../models/user")
+const User = require("../models/user");
 
 // index route
 router.get("/", async (req, res, next) => {
@@ -45,8 +45,10 @@ router.post("/", async (req, res, next) => {
 // show route
 router.get("/:id", async (req, res, next) => {
   try {
-    const dog = await Dog.findById(req.params.id);
-    res.json(dog);
+    const dog = await Dog.findById(req.params.id)
+      .populate("owner")
+      .exec()
+      .then((dog) => res.json(dog));
   } catch (error) {
     console.log(error);
     next(error);
