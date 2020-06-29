@@ -1,30 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const Dog = require("../models/dog");
+const User = require("../models/user");
 
-// index route
 router.get("/", async (req, res, next) => {
   try {
-    const dogs = await Dog.find({});
-    res.send(dogs);
+    const users = await User.find({});
+    res.send(users);
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
 
-// ==============================
-// new form route
-// router.get("/new", (req, res) => {
-//   res.json("new dog form");
-// });
-// ==============================
-
 // create route
 router.post("/", async (req, res, next) => {
   try {
-    const dog = await Dog.create(req.body);
-    res.json(dog);
+    const user = await User.create(req.body);
+    res.redirect("/");
   } catch (error) {
     console.log(error);
     next(error);
@@ -34,25 +26,19 @@ router.post("/", async (req, res, next) => {
 // show route
 router.get("/:id", async (req, res, next) => {
   try {
-    const dog = await Dog.findById(req.params.id);
-    res.json(dog);
+    const user = await User.findById(req.params.id);
+    res.json(user);
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
-// ===========================
-// edit form route
-// router.get("/:id/edit", (req, res) => {
-//   res.json("edit dog form");
-// });
-// ===========================
 
 // update form route
 router.put("/:id", async (req, res, next) => {
   try {
-    await Dog.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect(`/dogs/${req.params.id}`);
+    await User.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect(`/users/${req.params.id}`);
   } catch (error) {
     console.log(error);
     next(error);
@@ -62,8 +48,8 @@ router.put("/:id", async (req, res, next) => {
 //destroy route
 router.delete("/:id/delete", async (req, res, next) => {
   try {
-    await Dog.findByIdAndRemove(req.params.id);
-    res.redirect("/dogs");
+    await User.findByIdAndRemove(req.params.id);
+    res.redirect("/users");
   } catch (error) {
     console.log(error);
     next(error);
