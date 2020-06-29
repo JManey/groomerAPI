@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Dog = require("../models/dog");
+const User = require("../models/user")
 
 // index route
 router.get("/", async (req, res, next) => {
@@ -15,15 +16,25 @@ router.get("/", async (req, res, next) => {
 
 // ==============================
 // new form route
-// router.get("/new", (req, res) => {
-//   res.json("new dog form");
-// });
 // ==============================
 
 // create route
 router.post("/", async (req, res, next) => {
   try {
+    //find user
+    const user = await User.findById(req.user._id);
+    //create new dog
     const dog = await Dog.create(req.body);
+    //add owner to dog
+    dog.owner.username = req.user.username;
+    dog.owner.id = req.user._id;
+    //save dog
+    await dog.save();
+    //connect dog to owner
+    await user.dogs.push(dog);
+    await user.save();
+    console.log("user", user);
+    console.log("dog", dog);
     res.json(dog);
   } catch (error) {
     console.log(error);
