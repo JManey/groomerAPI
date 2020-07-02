@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/55d2bf57-c842-40a7-b21e-b3b8021ec1ea/resourceGroups/groomerAPI/providers/Microsoft.Web/sites/grommerAPI",
+    "appService.deploySubpath": "."
+}
