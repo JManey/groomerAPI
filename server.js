@@ -42,11 +42,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use("/", indexRoute);
-app.use("/dogs", dogsRoute);
-app.use("/users", usersRoute);
+app.use("/api", indexRoute);
+app.use("/api/dogs", dogsRoute);
+app.use("/api/users", usersRoute);
 
 // listen for requests
 app.listen(process.env.PORT, () => {
-  console.log("Server is listening on port:", 3000);
+  console.log("Server is listening on port:", process.env.PORT);
 });
