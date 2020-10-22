@@ -6,6 +6,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
+// setup CORS policy so front end can access
+const cors = require("cors");
+
 require("dotenv").config();
 // connect to the MongoDB with mongoose
 require("./config/database");
@@ -17,6 +20,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(express.json());
+// CORS impement
+app.use(cors());
 
 // ============= AUTH SETUP ===============================
 // setup express-session
